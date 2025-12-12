@@ -18,7 +18,7 @@ export function main() {
         console.log(colors.bg.black, colors.fg.yellow,
             "*****************************************************");
         console.log("                                                     ");
-        console.log("                  PETSHOP AMIGOS PET                ");
+        console.log("                  PETSHOP LOVE PET                    ");
         console.log("                                                     ");
         console.log("*****************************************************");
         console.log("                                                     ");
@@ -151,7 +151,7 @@ function keyPress(): void {
 
 function sobre(): void {
     console.log("*****************************************************");
-    console.log("Petshop Amigos Pet");
+    console.log("PETSHOP LOVE PET");
     console.log("Sistema desenvolvido em TypeScript");
     console.log("Versão 1.0");
     console.log("*****************************************************");
