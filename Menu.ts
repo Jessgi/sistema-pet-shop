@@ -1,8 +1,8 @@
 import readlinesync = require("readline-sync");
 import { colors } from './src/util/Colors';
+import { ProdutoPet } from './src/model/ProdutoPet';
 import { ProdutoController } from "./src/controller/ProdutoController";
-import { Produto } from "./src/model/Produto";
-import { ProdutoPet } from "./src/model/ProdutoPet";
+
 export function main() {
 
     let produtos: ProdutoController = new ProdutoController();
@@ -10,15 +10,14 @@ export function main() {
     let opcao, id, tipo, preco, estoque: number;
     let nome: string;
 
-    
-    const tipoProdutos = ['Ração', 'Brinquedo', 'Acessório'];
+    const categorias = ['Ração', 'Brinquedo', 'Acessório'];
 
     while (true) {
 
         console.log(colors.bg.black, colors.fg.yellow,
             "*****************************************************");
         console.log("                                                     ");
-        console.log("                  PETSHOP LOVE PET                    ");
+        console.log("                   PETSHOP LOVE PET                  ");
         console.log("                                                     ");
         console.log("*****************************************************");
         console.log("                                                     ");
@@ -45,90 +44,73 @@ export function main() {
         switch (opcao) {
 
             case 1:
-                console.log(colors.fg.whitestrong, "\n\nCadastrar Produto\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\nCadastrar Produto\n", colors.reset);
 
-                console.log("Digite o nome do Produto: ");
+                console.log("Nome: ");
                 nome = readlinesync.question("");
 
-                console.log("\nSelecione o tipo do Produto: ");
-                tipo = readlinesync.keyInSelect(tipoProdutos, "", { cancel: false }) + 1;
+                console.log("\nCategoria: ");
+                tipo = readlinesync.keyInSelect(categorias, "", { cancel: false }) + 1;
 
-                console.log("Digite o preço do Produto (R$): ");
+                console.log("Preço (R$): ");
                 preco = readlinesync.questionFloat("");
 
-                console.log("Digite a quantidade em estoque: ");
+                console.log("Quantidade em estoque: ");
                 estoque = readlinesync.questionInt("");
 
                 produtos.cadastrar(
-                    new ProdutoPet(
-                        produtos.gerarId(), 
-                        nome,
-                        preco,
-                        estoque,
-                        tipo
-                    )
+                    new ProdutoPet(produtos.gerarId(), nome, preco, estoque, tipo)
                 );
-
                 break;
 
             case 2:
-                console.log(colors.fg.whitestrong, "\n\nListar todos os Produtos\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\nListar todos os Produtos\n", colors.reset);
                 produtos.listarTodos();
                 keyPress();
                 break;
 
             case 3:
-                console.log(colors.fg.whitestrong, "\n\nBuscar Produto por ID\n\n", colors.reset);
-
-                console.log("Digite o ID do Produto: ");
+                console.log(colors.fg.whitestrong, "\nBuscar Produto por ID\n", colors.reset);
+                console.log("Digite o ID: ");
                 id = readlinesync.questionInt("");
-
                 produtos.procurarPorId(id);
-
                 keyPress();
                 break;
 
             case 4:
-                console.log(colors.fg.whitestrong, "\n\nAtualizar Produto\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\nAtualizar Produto\n", colors.reset);
 
-                console.log("Digite o ID do Produto: ");
+                console.log("Digite o ID do produto: ");
                 id = readlinesync.questionInt("");
 
                 let produto = produtos.buscarNoArray(id);
 
                 if (produto != null) {
-                    console.log("Digite o novo nome: ");
+                    console.log("Novo nome: ");
                     nome = readlinesync.question("");
 
-                    console.log("Digite o novo preço (R$): ");
+                    console.log("Novo preço: ");
                     preco = readlinesync.questionFloat("");
 
-                    console.log("Digite a nova quantidade em estoque: ");
+                    console.log("Novo estoque: ");
                     estoque = readlinesync.questionInt("");
 
                     tipo = produto.tipo;
 
                     produtos.atualizar(
-                        new ProdutoPet(
-                            id,
-                            nome,
-                            preco,
-                            estoque,
-                            tipo
-                        )
+                        new ProdutoPet(id, nome, preco, estoque, tipo)
                     );
-
                 } else {
-                    console.log(colors.fg.red + "\nO produto ID " + id + " não foi encontrado!", colors.reset);
+                    console.log(colors.fg.red + "\nProduto não encontrado!", colors.reset);
                 }
 
                 keyPress();
                 break;
 
             case 5:
-                console.log(colors.fg.whitestrong, "\n\nRemover Produto\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\nRemover Produto\n", colors.reset);
 
-                console.log("Digite o ID do Produto: ");
+                console.log("Digite o ID: ");
                 id = readlinesync.questionInt("");
 
                 produtos.deletar(id);
@@ -145,15 +127,14 @@ export function main() {
 }
 
 function keyPress(): void {
-    console.log("\n\nPressione uma tecla para continuar...\n\n");
+    console.log("\n\nPressione ENTER para continuar...");
     readlinesync.keyInPause();
 }
 
 function sobre(): void {
     console.log("*****************************************************");
     console.log("PETSHOP LOVE PET");
-    console.log("Sistema desenvolvido em TypeScript");
-    console.log("Versão 1.0");
+    console.log("Desenvolvido em TypeScript");
     console.log("*****************************************************");
 }
 

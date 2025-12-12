@@ -4,6 +4,7 @@ export abstract class Produto {
     private _nome: string;
     private _preco: number;
     private _estoque: number;
+    tipo: any;
 
     constructor(id: number, nome: string, preco: number, estoque: number) {
         this._id = id;
