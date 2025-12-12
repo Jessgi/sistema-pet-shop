@@ -1,4 +1,4 @@
-import { Conta } from "./Conta";
+import { Conta } from "./Produto";
 
 export class ContaCorrente extends Conta { 
 

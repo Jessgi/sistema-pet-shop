@@ -1,4 +1,4 @@
-import { Conta } from "../model/Conta";
+import { Conta } from "../model/Produto";
 
 export interface ContaRepository {
         // CRUD da Conta- Create, Read, Update, Delete 
