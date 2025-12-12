@@ -6,7 +6,7 @@
 ![POO](https://img.shields.io/badge/POO-Programação%20Orientada%20a%20Objetos-blue)
 ![Licença](https://img.shields.io/badge/Licença-Educacional-lightgrey)
 
-Projeto desenvolvido em **TypeScript** como parte do Performance Goal do Bloco 1 da Generation Brasil.
+Projeto desenvolvido em **TypeScript** como parte de avaliação prática do Bloco 1 da Generation Brasil.
 
 O objetivo é criar um sistema de controle de estoque para uma loja PetShop, utilizando Programação Orientada a Objetos (POO), interface, controller com array interno e um menu interativo no terminal.
 
@@ -66,10 +66,17 @@ classDiagram
 
 ---
 
-## 🎨 Menu Interativo
+## Desenvolvido por Jéssica Gizela
 
-O menu é exibido no terminal e permite a interação com o usuário:
+Projeto criado para treinamento em:
 
-👩‍💻 Desenvolvido por Jéssica Gizela
+POO
 
+Estruturas de dados
+
+Arquitetura em camadas
+
+CRUD
+
+TypeScript e Node.js
 
