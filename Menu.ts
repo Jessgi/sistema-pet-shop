@@ -1,58 +1,33 @@
 import readlinesync = require("readline-sync");
 import { colors } from './src/util/Colors';
-import { Conta } from './src/model/Conta';
-import { ContaCorrente } from './src/model/ContaCorrente';
-import { ContaPoupanca } from './src/model/ContaPoupanca';
-import { ContaController } from "./src/controller/ContaController";
-
+import { ProdutoController } from "./src/controller/ProdutoController";
+import { Produto } from "./src/model/Produto";
+import { ProdutoPet } from "./src/model/ProdutoPet";
 export function main() {
-    let contas: ContaController = new ContaController();
-    let opcao, numero, agencia,tipo,saldo, limite, aniversario, valor, numeroDestino: number;
-    let titular: string;
-    const tipoContas = ['Conta Corrente', 'Conta Poupança'];
+
+    let produtos: ProdutoController = new ProdutoController();
+
+    let opcao, id, tipo, preco, estoque: number;
+    let nome: string;
+
     
-   // Objeto da Classe ContaCorrente (Teste)
-    const conta: ContaCorrente = new ContaCorrente(1, 123, 1, "Adriana", 10000, 1000);
-    conta.visualizar();
-    conta.sacar(10500);
-    conta.visualizar();
-    conta.depositar(5000);
-    conta.visualizar();
-
-   // Objeto da Classe ContaCorrente (Teste)
-    const contacorrente: ContaCorrente = new ContaCorrente(2, 123, 1, "Mariana", 15000, 1000);
-    contacorrente.visualizar();
-    contacorrente.sacar(2000);
-    contacorrente.visualizar();
-    contacorrente.depositar(1000);
-    contacorrente.visualizar();
-
-    // Objeto da Classe ContaPoupanca (teste)
-    const contapoupanca: ContaPoupanca = new ContaPoupanca(3, 123, 2, "Victor", 1000, 10);
-    contapoupanca.visualizar();
-    contapoupanca.sacar(200);
-    contapoupanca.visualizar();
-    contapoupanca.depositar(1000);
-    contapoupanca.visualizar();
+    const tipoProdutos = ['Ração', 'Brinquedo', 'Acessório'];
 
     while (true) {
 
-        console.log(colors.bg.black, colors.fg.yellow, 
-                    "*****************************************************");
+        console.log(colors.bg.black, colors.fg.yellow,
+            "*****************************************************");
         console.log("                                                     ");
-        console.log("                BANCO DO BRAZIL COM Z                ");
+        console.log("                  PETSHOP AMIGOS PET                ");
         console.log("                                                     ");
         console.log("*****************************************************");
         console.log("                                                     ");
-        console.log("            1 - Criar Conta                          ");
-        console.log("            2 - Listar todas as Contas               ");
-        console.log("            3 - Buscar Conta por Numero              ");
-        console.log("            4 - Atualizar Dados da Conta             ");
-        console.log("            5 - Apagar Conta                         ");
-        console.log("            6 - Sacar                                ");
-        console.log("            7 - Depositar                            ");
-        console.log("            8 - Transferir valores entre Contas      ");
-        console.log("            9 - Sair                                 ");
+        console.log("        1 - Cadastrar Produto                        ");
+        console.log("        2 - Listar todos os Produtos                 ");
+        console.log("        3 - Buscar Produto por ID                    ");
+        console.log("        4 - Atualizar Produto                        ");
+        console.log("        5 - Remover Produto                          ");
+        console.log("        6 - Sair                                     ");
         console.log("                                                     ");
         console.log("*****************************************************");
         console.log("                                                     ", colors.reset);
@@ -60,183 +35,126 @@ export function main() {
         console.log("Entre com a opção desejada: ");
         opcao = readlinesync.questionInt("");
 
-        if (opcao == 9) {
-            console.log(colors.fg.greenstrong, "\nBanco do Brazil com Z - O seu Futuro começa aqui!");
+        if (opcao === 6) {
+            console.log(colors.fg.greenstrong, "\nObrigado por usar o sistema do Petshop!");
             sobre();
             console.log(colors.reset, "");
             process.exit(0);
         }
 
         switch (opcao) {
+
             case 1:
-                console.log(colors.fg.whitestrong, "\n\nCriar Conta\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\n\nCadastrar Produto\n\n", colors.reset);
 
-                console.log("Digite o numero da Agência: ");
-                agencia = readlinesync.questionInt("");
+                console.log("Digite o nome do Produto: ");
+                nome = readlinesync.question("");
 
-                console.log("Digite o nome do Titular da Conta: ");
-                titular = readlinesync.question("");
+                console.log("\nSelecione o tipo do Produto: ");
+                tipo = readlinesync.keyInSelect(tipoProdutos, "", { cancel: false }) + 1;
 
-                console.log("\n Digite o tipo da Conta: ");
-                tipo = readlinesync.keyInSelect(tipoContas, "", {cancel: false}) + 1;
+                console.log("Digite o preço do Produto (R$): ");
+                preco = readlinesync.questionFloat("");
 
-                console.log("Digite o saldo da Conta: ");
-                saldo = readlinesync.questionFloat("");
-                
+                console.log("Digite a quantidade em estoque: ");
+                estoque = readlinesync.questionInt("");
 
-                switch (tipo) {
-                    case 1:
-                        console.log("Digite o limite da Conta (R$): ");
-                        limite = readlinesync.questionFloat("");
-                        contas.cadastrar(new ContaCorrente(
-                            contas.gerarNumero(),
-                            agencia, tipo,
-                            titular,
-                            saldo, limite));
-                
+                produtos.cadastrar(
+                    new ProdutoPet(
+                        produtos.gerarId(), 
+                        nome,
+                        preco,
+                        estoque,
+                        tipo
+                    )
+                );
+
                 break;
-                    case 2:
-                        console.log("Digite o aniversário da Conta Poupança: ");
-                        aniversario = readlinesync.questionInt("");
-                        contas.cadastrar(new ContaPoupanca(
-                            contas.gerarNumero(),
-                            agencia, tipo, titular,
-                            saldo, aniversario));
-                        break;
-                }
-                break;
+
             case 2:
-                console.log(colors.fg.whitestrong, "\n\nListar todas as Contas\n\n", colors.reset);
-
-                contas.listarTodas();
-
-                keyPress()
+                console.log(colors.fg.whitestrong, "\n\nListar todos os Produtos\n\n", colors.reset);
+                produtos.listarTodos();
+                keyPress();
                 break;
+
             case 3:
-                console.log(colors.fg.whitestrong, "\n\nConsultar dados da Conta - por número\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\n\nBuscar Produto por ID\n\n", colors.reset);
 
-                console.log("Digite o número da Conta: ");
-                numero = readlinesync.questionInt("");
-                contas.procurarPorNumero(numero);
+                console.log("Digite o ID do Produto: ");
+                id = readlinesync.questionInt("");
 
-                keyPress()
+                produtos.procurarPorId(id);
+
+                keyPress();
                 break;
+
             case 4:
-                console.log(colors.fg.whitestrong, "\n\nAtualizar dados da Conta\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\n\nAtualizar Produto\n\n", colors.reset);
 
-                console.log("Digite o número da Conta: ");
-                numero = readlinesync.questionInt("");  
+                console.log("Digite o ID do Produto: ");
+                id = readlinesync.questionInt("");
 
-                let conta = contas.buscarnoArray(numero);
-                if (conta != null) {
-                    console.log("Digite o numero da Agência: ");
-                    agencia = readlinesync.questionInt("");
+                let produto = produtos.buscarNoArray(id);
 
-                    console.log("Digite o nome do Titular da Conta: ");
-                    titular = readlinesync.question("");
+                if (produto != null) {
+                    console.log("Digite o novo nome: ");
+                    nome = readlinesync.question("");
 
-                    tipo = conta.tipo;
+                    console.log("Digite o novo preço (R$): ");
+                    preco = readlinesync.questionFloat("");
 
-                    console.log("Digite o saldo da Conta: ");
-                    saldo = readlinesync.questionFloat("");
+                    console.log("Digite a nova quantidade em estoque: ");
+                    estoque = readlinesync.questionInt("");
 
-                    switch (tipo) {
-                        case 1:
-                            console.log("Digite o limite da Conta (R$): ");
-                            limite = readlinesync.questionFloat("");  
-                            contas.atualizar(new ContaCorrente(
-                                numero,
-                                agencia, tipo, titular,
-                                saldo, limite));
-                            break;
+                    tipo = produto.tipo;
 
-                        case 2:
-                            console.log("Digite o aniversário da Conta Poupança: ");
-                            aniversario = readlinesync.questionInt("");
-                            contas.atualizar(new ContaPoupanca(
-                                numero,
-                                agencia, tipo, titular,saldo, aniversario));
-                            break;
-                    }
+                    produtos.atualizar(
+                        new ProdutoPet(
+                            id,
+                            nome,
+                            preco,
+                            estoque,
+                            tipo
+                        )
+                    );
+
                 } else {
-                    console.log(colors.fg.red + "\nA conta número: " + numero + 
-                    "Não foi encontrada!", colors.reset);
+                    console.log(colors.fg.red + "\nO produto ID " + id + " não foi encontrado!", colors.reset);
                 }
 
-                keyPress()
+                keyPress();
                 break;
+
             case 5:
-                console.log(colors.fg.whitestrong, "\n\nApagar uma Conta\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\n\nRemover Produto\n\n", colors.reset);
 
-                console.log("Digite o número da Conta: ");
-                numero = readlinesync.questionInt("");
-                contas.deletar(numero);
+                console.log("Digite o ID do Produto: ");
+                id = readlinesync.questionInt("");
 
-                keyPress()
+                produtos.deletar(id);
+
+                keyPress();
                 break;
-            case 6:
-                console.log(colors.fg.whitestrong, "\n\nSaque\n\n", colors.reset);
 
-                console.log("Digite o número da Conta: ");
-                numero = readlinesync.questionInt("");
-
-                console.log("Digite o valor do Saque: ");
-                valor = readlinesync.questionFloat("");
-                contas.sacar(numero, valor);
-
-                keyPress()
-                break;
-            case 7:
-                console.log(colors.fg.whitestrong, "\n\nDepósito\n\n", colors.reset);
-
-                console.log("Digite o número da Conta: ");
-                numero = readlinesync.questionInt("");
-
-                console.log("Digite o valor do Depósito: ");
-                valor = readlinesync.questionFloat("");
-                contas.depositar(numero, valor);
-
-                keyPress()
-                break;
-            case 8:
-                console.log(colors.fg.whitestrong, "\n\nTransferência entre Contas\n\n", colors.reset);
-
-                console.log("Digite o número da Conta de Origem: ");
-                numero = readlinesync.questionInt("");
-
-                console.log("Digite o número da Conta de Destino: ");
-                numeroDestino = readlinesync.questionInt("");
-
-                console.log("Digite o valor do Depósito (R$): ");
-                valor = readlinesync.questionFloat("");
-
-                contas.transferir(numero, numeroDestino, valor);
-
-                keyPress()
-                break;
             default:
-                console.log(colors.fg.whitestrong, "\nOpção Inválida!\n", colors.reset);
-
-                keyPress()
+                console.log(colors.fg.red, "\nOpção inválida!\n", colors.reset);
+                keyPress();
                 break;
         }
     }
-
 }
-
-/* Função removida (duplicada) — a versão exportada mais abaixo é a usada */
 
 function keyPress(): void {
     console.log("\n\nPressione uma tecla para continuar...\n\n");
     readlinesync.keyInPause();
 }
 
-main();
-
 function sobre(): void {
     console.log("*****************************************************");
-    console.log("Banco do Brazil com Z");
-    console.log("Desenvolvido em TypeScript");
+    console.log("Petshop Amigos Pet");
+    console.log("Sistema desenvolvido em TypeScript");
     console.log("Versão 1.0");
     console.log("*****************************************************");
 }
+
+main();
