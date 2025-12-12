@@ -1,24 +1,39 @@
-import { Conta } from "./Produto";    
+import { Produto } from "./Produto";
 
-export class ContaPoupanca extends Conta { 
+export class ProdutoPet extends Produto {
 
-    private _aniversario: number;
-    
-    constructor(numero: number, agencia: number, tipo: number, titular: string, 
-    saldo: number, aniversario: number) {
-        super(numero, agencia, tipo, titular, saldo);
-        this._aniversario = aniversario;
+    private _tipo: number;
+
+    constructor(id: number, nome: string, preco: number, estoque: number, tipo: number) {
+        super(id, nome, preco, estoque);
+        this._tipo = tipo;
     }
-    public get aniversario() {
-        return this._aniversario;
-    }           
-    public set aniversario(aniversario: number) {
-        this._aniversario = aniversario;
+
+    public get tipo() {
+        return this._tipo;
     }
+
+    public set tipo(tipo: number) {
+        this._tipo = tipo;
+    }
+
     public visualizar(): void {
         super.visualizar();
-        console.log("Dia do aniversário: " + this._aniversario);
+
+        let categoria = "";
+
+        switch (this._tipo) {
+            case 1:
+                categoria = "Ração";
+                break;
+            case 2:
+                categoria = "Brinquedo";
+                break;
+            case 3:
+                categoria = "Acessório";
+                break;
+        }
+
+        console.log("Categoria: " + categoria);
     }
-
-
 }

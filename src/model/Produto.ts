@@ -1,92 +1,56 @@
-export abstract class Conta {
+export abstract class Produto {
 
-    private _numero: number;
-    private _agencia: number;
-    private _tipo: number;
-    private _titular: string;
-    private _saldo: number;
+    private _id: number;
+    private _nome: string;
+    private _preco: number;
+    private _estoque: number;
 
-    constructor(numero: number, agencia: number, tipo: number, titular: string, saldo: number) {
-        this._numero = numero;
-        this._agencia = agencia;
-        this._tipo = tipo;
-        this._titular = titular;
-        this._saldo = saldo;
+    constructor(id: number, nome: string, preco: number, estoque: number) {
+        this._id = id;
+        this._nome = nome;
+        this._preco = preco;
+        this._estoque = estoque;
     }
 
-    public get numero() {
-        return this._numero;
+    public get id() {
+        return this._id;
     }
 
-    public set numero(numero: number) {
-        this._numero = numero;
+    public set id(id: number) {
+        this._id = id;
     }
 
-    public get agencia() {
-        return this._agencia;
+    public get nome() {
+        return this._nome;
     }
 
-    public set agencia(agencia: number) {
-        this._agencia = agencia;
+    public set nome(nome: string) {
+        this._nome = nome;
     }
 
-    public get tipo() {
-        return this._tipo;
+    public get preco() {
+        return this._preco;
     }
 
-    public set tipo(tipo: number) {
-        this._tipo = tipo;
+    public set preco(preco: number) {
+        this._preco = preco;
     }
 
-    public get titular() {
-        return this._titular;
+    public get estoque() {
+        return this._estoque;
     }
 
-    public set titular(titular: string) {
-        this._titular = titular;
-    }
-
-    public get saldo() {
-        return this._saldo;
-    }
-
-    public set saldo(saldo: number) {
-        this._saldo = saldo;
-    }
-
-    public sacar(valor: number): boolean {
-        if (this._saldo < valor) {
-            console.log("\n Saldo Insuficiente!");
-            return false;
-        }
-
-        this._saldo -= valor;
-        return true;
-    }
-
-    public depositar(valor: number): void {
-        this._saldo += valor;
+    public set estoque(estoque: number) {
+        this._estoque = estoque;
     }
 
     public visualizar(): void {
-        let tipo: string = "";
-
-        switch (this._tipo) {
-            case 1:
-                tipo = "Conta Corrente";
-                break;
-            case 2:
-                tipo = "Conta Poupança";
-                break;
-        }
-
         console.log("\n\n*****************************************************");
-        console.log("Dados da Conta:");
+        console.log("Dados do Produto:");
         console.log("*****************************************************");
-        console.log("Número da Conta: " + this._numero);
-        console.log("Agência: " + this._agencia);
-        console.log("Tipo da Conta: " + tipo);
-        console.log("Titular: " + this._titular);
-        console.log("Saldo: " + this._saldo.toFixed(2));
+        console.log("ID: " + this._id);
+        console.log("Nome: " + this._nome);
+        console.log("Preço: R$ " + this._preco.toFixed(2));
+        console.log("Estoque: " + this._estoque);
     }
 }
